@@ -2,9 +2,9 @@ from inventory import Inventory
 from reports import Reports
 
 
-def get_input():
+def get_input() -> int:
     print(
-        "Menu:\n1. Add Items\n2. Get all items\n3. Get a specific item or key\n4. Update an item or key\n5. Show Overview of Inventory\n6. Genrerate report\n7. Generate category Report"
+        "Menu:\n1. Add Items\n2. Get all items\n3. Get a specific item or key\n4. Update an item or key\n5. Show Overview of Inventory\n6. Genrerate report\n7. Generate category Report\n8. Quit"
     )
     choice = int(input("> "))
     return choice
@@ -14,49 +14,57 @@ def main():
     inv = Inventory()
     report = Reports()
 
-    print("\n --- show initialised list of items --- ")
-    print(inv.get_all_items())
-
     while True:
-        inv.add_items(inv.adding())
-        print()
-        choice = input("Would you like to add more items ? Y/N\n> ")
-        if choice.lower() == "n":
-            break
+        choice = get_input()
 
-    print("\n --- show populated list of items --- ")
-    print(inv.get_all_items())
+        match choice:
+            case 1:
+                while True:
+                    inv.add_items(inv.adding())
+                    print()
+                    choice = input("Would you like to add more items ? Y/N\n> ")
+                    if choice.lower() != "y":
+                        break
 
-    inv.updating(1, 15, key="price")
-    inv.updating(
-        1,
-        {
-            "id": 10,
-            "details": {
-                "price": 1,
-                "category": "sports",
-                "name": "bike",
-                "quantity": 1,
-            },
-        },
-    )
+            case 2:
+                print(inv.get_all_items())
 
-    print("\n --- show updated list of items --- ")
-    print(inv.get_all_items())
+            case 3:
+                id = int(input("Enter the ID to lookup:\n> "))
+                key = input("Enter the key (press enter to show all details):\n> ")
+                print(inv.get_items(id, key))
 
-    print("\n --- show specific item --- ")
-    print(inv.get_items(id=2))
-    print("\n --- show specific key from item --- ")
-    print(inv.get_items(id=2, key="name"))
+            case 4:
+                id = int(input("Enter a new ID\n> "))
+                key = input("Enter new key (press enter to update entire record):\n> ")
+                if key == "":
+                    new_data = inv.adding()
+                else:
+                    new_data = eval(
+                        input("Enter the new data (wrap string in quotations):\n> ")
+                    )
+                inv.updating(id, new_data, key)
 
-    items = inv.get_all_items()
+            case 5:
+                items = inv.get_all_items()
+                report.overview(items)
 
-    print("\n --- reports --- ")
-    report.overview(items)
-    print(report.generate_report(items=items))
-    print(report.generate_report(items=items))
-    print(report.generate_report(items=items, category="electronics"))
-    report.generate_category_report(items=items)
+            case 6:
+                category = input(
+                    "Enter the category (press enter to show report for all):\n> "
+                )
+
+                items = inv.get_all_items()
+                print(report.generate_report(items, category))
+
+            case 7:
+                items = inv.get_all_items()
+                report.generate_category_report(items)
+
+            case 8:
+                break
+            case _:
+                print("Incorrect input.")
 
 
 if __name__ == "__main__":
