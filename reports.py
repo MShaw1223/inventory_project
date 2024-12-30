@@ -14,6 +14,13 @@ items = {
         }
 """
 
+
+class foo:
+    # data = [{}]
+    def __init__(self, data) -> None:
+        pass
+
+
 items = [
     {
         "id": 1,  # id of item
@@ -23,7 +30,16 @@ items = [
             "quantity": 5,
             "category": "clothing",
         },
-    }
+    },
+    {
+        "id": 2,  # id of item
+        "details": {
+            "name": "t-shirt",
+            "price": 10.00,
+            "quantity": 5,
+            "category": "clothing",
+        },
+    },
 ]
 print(items[0]["id"])
 print(items[0]["details"])
