@@ -4,7 +4,7 @@ from reports import Reports
 
 def get_input() -> int:
     print(
-        "Menu:\n1. Add Items\n2. Get all items\n3. Get a specific item or key\n4. Update an item or key\n5. Show Overview of Inventory\n6. Genrerate report\n7. Generate category Report\n8. Quit"
+        "Menu:\n1. Add Items\n2. Get all items\n3. Get a specific item or key\n4. Update an item or key\n5. Show Overview of Inventory\n6. Generate report\n7. Generate category Report\n8. Quit"
     )
     choice = int(input("> "))
     return choice
@@ -22,7 +22,7 @@ def main():
                 while True:
                     inv.add_items(inv.adding())
                     print()
-                    choice = input("Would you like to add more items ? Y/N\n> ")
+                    choice = input("Would you like to add more items ? Y/N\n> ").strip()
                     if choice.lower() != "y":
                         break
 
@@ -55,7 +55,7 @@ def main():
                 )
 
                 items = inv.get_all_items()
-                print(report.generate_report(items, category))
+                report.generate_report(items, category)
 
             case 7:
                 items = inv.get_all_items()

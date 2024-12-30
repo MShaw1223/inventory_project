@@ -39,9 +39,12 @@ class Reports:
                 )
 
     def generate_report(self, items, category="") -> list:
-        msg = "Report: List of items in selected categories"
-        print(msg)
-        print("=" * len(msg))
+        if category:
+            print(f"\nReport: List of items in {category} category:")
+            print("=================================================")
+        else:
+            print("\nReport: List of all items:")
+            print("=================================================")
 
         set_categories = set()
         for item in items:
@@ -49,12 +52,25 @@ class Reports:
                 set_categories.add(item["details"]["category"])
 
         search_result = []
+
         for cat in set_categories:
             if category == "":
-                return items
-            else:
+                for item in items:
+                    print(
+                        f"ID: {item['id']}, Name: {item['details']['name']}, "
+                        f"Price: ${item['details']['price']}, "
+                        f"Quantity: {item['details']['quantity']}"
+                    )
+                break
+            elif category == cat:
                 for item in items:
                     if item["details"]["category"] == cat:
                         search_result.append(item)
+                        print(
+                            f"ID: {item['id']}, Name: {item['details']['name']}, "
+                            f"Price: ${item['details']['price']}, "
+                            f"Quantity: {item['details']['quantity']}"
+                        )
+            elif category not in set_categories:
+                print(f"No items found in the {category} category.")
 
-        return search_result
