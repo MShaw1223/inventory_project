@@ -6,9 +6,14 @@ class Inventory:
         payload = {}
 
         payload["id"] = int(input("Enter product id:\n> "))
-        payload["name"] = input("Enter product name:\n> ")
-        payload["price"] = float(input("Enter price of item:\n> "))
-        payload["quantity"] = int(input("Enter the quantity in stock:\n> "))
+
+        details = {}
+        details["name"] = input("Enter product name:\n> ")
+        details["price"] = float(input("Enter price of item:\n> "))
+        details["quantity"] = int(input("Enter the quantity in stock:\n> "))
+        details["category"] = input("Enter category of product:\n> ")
+
+        payload["details"] = details
 
         return payload
 
@@ -16,19 +21,23 @@ class Inventory:
         self.items.append(input_data)
 
     def updating(self, id, new, key="") -> None:
+        for i in range(len(self.items)):
+            if self.items[i]["id"] == id and key == "":
+                self.items[i] = new
+            elif self.items[i]["id"] == id:
+                if key != "id" and key in self.items[i]["details"]:
+                    self.items[i]["details"][key] = new
+                elif key in self.items[i] and key == "id":
+                    self.items[i]["id"] = new
+
+    def get_all_items(self) -> list:
+        return self.items
+
+    def get_items(self, id, key="") -> list:
         for item in self.items:
             if item["id"] == id and key == "":
-                item = new
-            elif item["id"] == id and key in item:
-                item[key] = new
-
-    def get_items(self, id=0, key="") -> list:
-        payload = []
-        for item in self.items:
-            if id == 0 and key == "":
-                return self.items
-            elif item["id"] == id and key == "":
-                payload.append(item)
-            elif item["id"] == id and key in item:
-                payload.append(item[key])
-        return payload
+                return [item]
+            elif item["id"] == id and key in item["details"]:
+                return [item["details"][key]]
+        else:
+            return []
