@@ -15,10 +15,20 @@ class Inventory:
     def add_items(self, input_data) -> None:
         self.items.append(input_data)
 
-    def updating(self):
-        # iterate through items
-        # search for key to change
-        pass
+    def updating(self, id, new, key="") -> None:
+        for item in self.items:
+            if item["id"] == id and key == "":
+                item = new
+            elif item["id"] == id and key in item:
+                item[key] = new
 
-    def get_items(self):
-        return self.items
+    def get_items(self, id=0, key="") -> list:
+        payload = []
+        for item in self.items:
+            if id == 0 and key == "":
+                return self.items
+            elif item["id"] == id and key == "":
+                payload.append(item)
+            elif item["id"] == id and key in item:
+                payload.append(item[key])
+        return payload
