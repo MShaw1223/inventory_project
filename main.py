@@ -35,7 +35,7 @@ def main():
                 print(inv.get_items(id, key))
 
             case 4:
-                id = int(input("Enter a new ID\n> "))
+                id = int(input("Enter an ID of the item: \n> "))
                 key = input("Enter new key (press enter to update entire record):\n> ")
                 if key == "":
                     new_data = inv.adding()

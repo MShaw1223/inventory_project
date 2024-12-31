@@ -1,22 +1,18 @@
-"""
-reports on categories, prices
-sort reports by attributes ie price
-
-input --> dictionary :  item id, name, price, quantity, category
-"""
-
-
 class Reports:
     def overview(self, items):
-        print("Inventory Report: List of all items")
-        print("===============================")
-        for item in items:
-            print(f"ID: {item['id']}")
-            print(f"Name: {item['details']['name']}")
-            print(f"Price: ${item['details']['price']}")
-            print(f"Quantity: {item['details']['quantity']}")
-            print(f"Category: {item['details']['category']}")
-            print("----------------")
+        if not items:
+            print("Inventory Report: No items available.")
+            print("The inventory is currently empty.")
+        else:
+            print("Inventory Report: List of all items")
+            print("===============================")
+            for item in items:
+                print(f"ID: {item['id']}")
+                print(f"Name: {item['details']['name']}")
+                print(f"Price: ${item['details']['price']}")
+                print(f"Quantity: {item['details']['quantity']}")
+                print(f"Category: {item['details']['category']}")
+                print("----------------")
 
     def generate_category_report(self, items):
         print("Category Report: List of all items in all categories")
@@ -35,11 +31,17 @@ class Reports:
                 print(
                     f"ID: {item['id']}, Name: {item['details']['name']}, "
                     f"Price: ${item['details']['price']}, "
-                    f"Quantity: {item['details']['quantity']}"
+                    f"Quantity: {item['details']['quantity']}, "
+                    f"Category: {item['details']['category']}"
                 )
+        if categories == {}:
+            print("The inventory is currently empty.")
 
     def generate_report(self, items, category="") -> list:
-        if category:
+        if not items:
+            print("The inventory is currently empty.")
+            return
+        elif category:
             print(f"\nReport: List of items in {category} category:")
             print("=================================================")
         else:
@@ -71,6 +73,7 @@ class Reports:
                             f"Price: ${item['details']['price']}, "
                             f"Quantity: {item['details']['quantity']}"
                         )
-            elif category not in set_categories:
-                print(f"No items found in the {category} category.")
+
+        if  category not in set_categories:
+            print(f"No items found in the {category} category.")
 
