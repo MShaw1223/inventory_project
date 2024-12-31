@@ -37,9 +37,9 @@ class Reports:
         if categories == {}:
             print("The inventory is currently empty.")
 
-    def generate_report(self, items, category="") -> list:
+    def generate_report(self, items, category="") -> None:
         if not items:
-            print("The inventory is currently empty.")
+            print("The inventory is currently empty.\n")
             return
         elif category:
             print(f"\nReport: List of items in {category} category:")
@@ -53,27 +53,14 @@ class Reports:
             if item["details"]["category"] not in set_categories:
                 set_categories.add(item["details"]["category"])
 
-        search_result = []
-
         for cat in set_categories:
-            if category == "":
-                for item in items:
-                    print(
-                        f"ID: {item['id']}, Name: {item['details']['name']}, "
-                        f"Price: ${item['details']['price']}, "
-                        f"Quantity: {item['details']['quantity']}"
-                    )
-                break
-            elif category == cat:
+            if category not in set_categories:
+                print(f"No items found in the {category} category.\n")
+            else:
                 for item in items:
                     if item["details"]["category"] == cat:
-                        search_result.append(item)
                         print(
                             f"ID: {item['id']}, Name: {item['details']['name']}, "
                             f"Price: ${item['details']['price']}, "
                             f"Quantity: {item['details']['quantity']}"
                         )
-
-        if  category not in set_categories:
-            print(f"No items found in the {category} category.")
-
