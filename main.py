@@ -59,7 +59,7 @@ def main():
 
             case 7:
                 items = inv.get_all_items()
-                report.generate_category_report(items)
+                report.generate_report_all_categories(items)
 
             case 8:
                 break

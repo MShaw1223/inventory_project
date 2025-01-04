@@ -14,7 +14,7 @@ class Reports:
                 print(f"Category: {item['details']['category']}")
                 print("----------------")
 
-    def generate_category_report(self, items):
+    def generate_report_all_categories(self, items):
         print("Category Report: List of all items in all categories")
         print("=====================================================")
 
@@ -53,14 +53,19 @@ class Reports:
             if item["details"]["category"] not in set_categories:
                 set_categories.add(item["details"]["category"])
 
-        for cat in set_categories:
-            if category not in set_categories:
-                print(f"No items found in the {category} category.\n")
-            else:
-                for item in items:
-                    if item["details"]["category"] == cat:
-                        print(
-                            f"ID: {item['id']}, Name: {item['details']['name']}, "
-                            f"Price: ${item['details']['price']}, "
-                            f"Quantity: {item['details']['quantity']}"
-                        )
+        if category not in set_categories:
+            print(f"No items found in the {category} category.\n")
+        else:
+            for item in items:
+                if item["details"]["category"] == category:
+                    print(
+                        f"ID: {item['id']}, Name: {item['details']['name']}, "
+                        f"Price: ${item['details']['price']}, "
+                        f"Quantity: {item['details']['quantity']}"
+                    )
+                elif category == "":
+                    print(
+                        f"ID: {item['id']}, Name: {item['details']['name']}, "
+                        f"Price: ${item['details']['price']}, "
+                        f"Quantity: {item['details']['quantity']}"
+                    )
